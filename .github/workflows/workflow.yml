@@ -20,5 +20,8 @@ jobs:
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
     - uses: google-github-actions/deploy-cloud-functions@v0
       with:
+        event_trigger_resource: projects/_/buckets/wowless.dev
+        event_trigger_service: storage.googleapis.com
+        event_trigger_type: google.storage.object.finalize
         name: genindex
         runtime: python39
