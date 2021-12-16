@@ -11,12 +11,16 @@ def rewrite_index():
             "index.html",
             extracts=[
                 PurePath(blob.name).stem
-                for blob in client.list_blobs("wowless.dev", prefix="extracts/")
+                for blob in client.list_blobs(
+                    "wowless.dev", prefix="extracts/"
+                )
                 if "wow" not in blob.name
             ],
             gscrapes=[
                 PurePath(blob.name).stem
-                for blob in client.list_blobs("wowless.dev", prefix="gscrapes/")
+                for blob in client.list_blobs(
+                    "wowless.dev", prefix="gscrapes/"
+                )
             ],
         ),
         content_type="text/html",
