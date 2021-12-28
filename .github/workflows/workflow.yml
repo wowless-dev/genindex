@@ -25,3 +25,4 @@ jobs:
         event_trigger_type: google.storage.object.finalize
         name: genindex
         runtime: python39
+        service_account_email: genindex-runner@www-wowless-dev.iam.gserviceaccount.com
