@@ -1,23 +1,36 @@
 from flask import render_template
 from google.cloud import storage
-from pathlib import PurePath
+
+products = [
+    "wow",
+    "wowt",
+    "wow_classic",
+    "wow_classic_era",
+    "wow_classic_era_ptr",
+    "wow_classic_ptr",
+]
 
 client = storage.Client()
 
 
 def rendered_index():
-    return render_template(
-        "index.html",
-        extracts=[
-            PurePath(blob.name).stem
-            for blob in client.list_blobs("wowless.dev", prefix="extracts/")
-            if "wow" not in blob.name
-        ],
-        gscrapes=[
-            PurePath(blob.name).stem
-            for blob in client.list_blobs("wowless.dev", prefix="gscrapes/")
-        ],
-    )
+    def fun(p):
+        v = (
+            client.bucket("wowless.dev")
+            .blob(f"extracts/{p}.txt")
+            .download_as_text()
+            .strip()
+        )
+        has_gscrape = (
+            client.bucket("wowless.dev").blob(f"gscrapes/{v}.lua").exists()
+        )
+        return {
+            "name": p,
+            "version": v,
+            "has_gscrape": has_gscrape,
+        }
+
+    return render_template("index.html", products=map(fun, products))
 
 
 def genindex(event, _context):

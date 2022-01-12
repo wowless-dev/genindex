@@ -13,16 +13,9 @@
 <li><a href="https://github.com/wowless-dev">wowless, the site</a></li>
 </ul>
 <p>technical foo below</p>
-<p>extracts</p>
 <ul>
-{%- for extract in extracts %}
-<li>{{ extract }}</li>
-{%- endfor %}
-</ul>
-<p>gscrapes</p>
-<ul>
-{%- for gscrape in gscrapes %}
-<li>{{ gscrape }}</li>
+{%- for p in products %}
+<li>{{ p.name }} {{ p.version }} {{ p.has_gscrape }}</li>
 {%- endfor %}
 </ul>
 </body>
